@@ -1,3 +1,5 @@
+import os
+
 import ipfsapi
 
 
@@ -8,5 +10,6 @@ class IpfsManager:
     def add_video(self, name):
         self._api.add(name)
 
-    def get_video(self, multihash):
+    def get_video(self, multihash, path):
         self._api.get(multihash)
+        os.rename('{}'.format(multihash), path)
