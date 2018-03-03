@@ -1,0 +1,7 @@
+*.pyc
+.idea
+node_modules
+static/build
+collected_static
+webpack-stats.json
+conf/*
