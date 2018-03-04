@@ -1,5 +1,6 @@
 import text_messages
 import os
+from backend import login, User
 
 def start_callback_body(bot, update):
 	bot.send_message(chat_id=update.message.chat_id, text=text_messages.start_message_initial.format(update.message.from_user.first_name))
@@ -16,6 +17,16 @@ def upload_file(bot, update):
 			try:
 				filepath = os.path.join(os.getcwd(), 'hackathon.mp4')
 				pure_file.download(custom_path=filepath)
+				try:
+					#hardcode
+					login = 'poster'
+					password = 'qwerty12345'
+					user_ = login(login, password)
+					user_.add_video('VideoPotest', filepath)
+					return True
+				except Exception as e:
+					print(e)
+					return False
 				return True
 			except ValueError as e:
 				print(e)
