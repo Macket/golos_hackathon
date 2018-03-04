@@ -40,7 +40,8 @@ class ChainMaster:
         all_videos = self._steem.steemd.get_blog(self._username, 0, 100)
         key = lambda x: json.loads(x['comment']['json_metadata'])['name']
         result = index(query, all_videos, key=key)
-        return [SearchEntry(**self._extract_search_entry(video)) for video in result]
+        #return [SearchEntry(**self._extract_search_entry(video)) for video in result]
+        return [self._extract_search_entry(video) for video in result]
 
     def get_video_metadata(self, name):
         permlink = self._get_permlink_from_name(name)
