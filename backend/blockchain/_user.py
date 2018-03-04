@@ -30,6 +30,7 @@ class User:
         self._passwd = password
         self._steem = steem
         self._ipfsapi = get_ipfsapi()
+        self._cur_post = None
 
     @staticmethod
     def get_videos_list(query):
@@ -62,4 +63,7 @@ class User:
         )
 
     def vote_video(self, name, type):
-        pass
+        if not self._cur_post:
+            raise RuntimeError('There is no post to vote')
+
+
