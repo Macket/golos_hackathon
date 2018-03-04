@@ -5,7 +5,7 @@ import steem
 from steembase.account import PasswordKey
 from steem.post import Post
 
-from ipfs import get_ipfsapi
+from ..ipfs import get_ipfsapi
 from ._chain_master import get_chain_master
 
 
@@ -45,10 +45,11 @@ class User:
 
     def get_video(self, name, path):
         video_metadata = User.get_video_unauthorized(name, path)
-        return Post({
+        self._cur_post = Post({
             'author': video_metadata['author'],
             'permlink': video_metadata['name'],
         }, self._steem)
+        return self._cur_post
 
     def add_video(self, name, path, description=None):
         description = description or 'No description'
@@ -62,8 +63,11 @@ class User:
             default_parent_permlink='video'
         )
 
-    def vote_video(self, name, type):
+    def vote_video(self, type):
         if not self._cur_post:
             raise RuntimeError('There is no post to vote')
 
+        if type == VoteType.UP_VOTE:
+            return self._cur_post.upvote(self._username)
 
+        return self._cur_post.downvote(self._username)
