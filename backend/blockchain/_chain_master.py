@@ -24,7 +24,7 @@ class ChainMaster:
 
     def __init__(self):
         self._steem = steem.Steem(['https://ws.testnet3.golos.io'])
-        self._username = 'liker'
+        self._username = 'chainmaster'
         self._password = 'qwerty12345'
         if not self._steem.steemd.login(self._username, self._password):
             raise RuntimeError('ChainMaster login failed!')
@@ -56,7 +56,7 @@ class ChainMaster:
 
         self._steem.commit.post(
             title=name,
-            body='body',
+            body='This post shall not be displayed',
             author=self._username,
             permlink=self._get_permlink_from_name(name),
             default_parent_permlink='videos',
