@@ -5,7 +5,7 @@ import steem
 from steembase.account import PasswordKey
 from steem.post import Post
 
-from ipfs import get_ipfsapi
+from ..ipfs import get_ipfsapi
 from ._chain_master import get_chain_master
 
 
