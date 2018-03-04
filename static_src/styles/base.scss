@@ -16,7 +16,13 @@
   padding-right: 5%;
 }
 
-.video-list, video {
+.video-list {
+  box-shadow: $shadow;
+}
+
+video {
+  width: 80%;
+  height: 400px;
   box-shadow: $shadow;
 }
 
