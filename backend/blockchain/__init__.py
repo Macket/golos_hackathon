@@ -1,1 +1,1 @@
-from ._user import login, User
+from ._user import login, User, VoteType

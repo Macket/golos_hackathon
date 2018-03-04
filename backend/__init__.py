@@ -1,1 +1,1 @@
-from blockchain._user import User, login
+from blockchain._user import User, login, VoteType
