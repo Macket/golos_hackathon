@@ -4,6 +4,10 @@ import json
 import steem
 from steembase.account import PasswordKey
 
+
+from backend.goldex import index
+
+
 SEARCH_ENTRY_FIELDS = ['name', 'author', 'description']
 SearchEntry = namedtuple('SearchEntry', SEARCH_ENTRY_FIELDS)
 
@@ -31,16 +35,12 @@ class ChainMaster:
 
         key = PasswordKey(self._username, self._password, 'posting')
         self._steem.commit.wallet.setKeys(str(key.get_private()))
-        print(1)
 
     def get_videos_list(self, query):
         all_videos = self._steem.steemd.get_blog(self._username, 0, 100)
-        result = []
-        for video in all_videos:
-            if query in json.loads(video['comment']['json_metadata'])['name']:
-                result.append(self._extract_search_entry(video))
-
-        return result
+        key = lambda x: json.loads(x['comment']['json_metadata'])['name']
+        result = index(query, all_videos, key=key)
+        return [SearchEntry(**self._extract_search_entry(video)) for video in result]
 
     def get_video_metadata(self, name):
         permlink = self._get_permlink_from_name(name)

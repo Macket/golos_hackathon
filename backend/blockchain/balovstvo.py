@@ -2,13 +2,13 @@ from backend import login, User
 
 
 def main():
-    user = login('poster', 'qwerty12345')
-    video = user.get_video('videopotest', './pizda')
+    user = login('liker', 'qwerty12345')
+    #video = user.get_video('hackathon-mipt', '/home/aleksei/pizda')
 
-    user.add_video('jordan2', '/home/aleksei/jordan.txt', 'My favorite actress without any video')
-    print(1)
+    # user.add_video('blockchaining', '/home/aleksei/jordan.txt', 'Ooops, there is no any video')
 
-
+    videos_list = User.get_videos_list('empty-test')
+    print(videos_list)
 
 if __name__ == '__main__':
     main()

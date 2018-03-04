@@ -51,13 +51,15 @@ class User:
         }, self._steem)
         return self._cur_post
 
-    def add_video(self, name, path, description=None):
+    def add_video(self, name, path, description=None, miniature_url=None):
         description = description or 'No description'
+        miniature_url = miniature_url or self.get_miniature_url(path)
+
         result = self._ipfsapi.add_video(path)
         get_chain_master().add_video(name, self._username, description, result['Hash'])
         self._steem.commit.post(
             title=name,
-            body=description + '\n' + self.get_miniature_url(path),
+            body=description + '\n' + miniature_url,
             author=self._username,
             permlink=name,
             default_parent_permlink='video'
@@ -73,4 +75,4 @@ class User:
         return self._cur_post.downvote(self._username)
 
     def get_miniature_url(self, path):
-        return 'https://kinolift.ru/media/users/3491/42068_l.jpg'
+        return 'https://static.tumblr.com/5cc5658c2c9cd06cfc68747c9059bd6f/i9ytv5i/szXn6nvfq/tumblr_static_tumblr_static__640.jpg'
