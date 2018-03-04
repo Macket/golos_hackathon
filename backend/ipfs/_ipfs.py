@@ -16,8 +16,8 @@ class IpfsApi:
     def __init__(self):
         self._api = ipfsapi.connect('127.0.0.1', 5001)
 
-    def add_video(self, name):
-        self._api.add(name)
+    def add_video(self, path):
+        return self._api.add(path)
 
     def get_video(self, multihash, path):
         self._api.get(multihash)

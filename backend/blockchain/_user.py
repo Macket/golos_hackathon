@@ -1,9 +1,12 @@
+from collections import namedtuple
 from enum import Enum
 
 import steem
 from steembase.account import PasswordKey
+from steem.post import Post
 
 from ipfs import get_ipfsapi
+from ._chain_master import get_chain_master
 
 
 def login(username, password):
@@ -12,7 +15,7 @@ def login(username, password):
         return None
 
     private_key = PasswordKey(username, password, 'posting')
-    st.commit.wallet.setKeys(private_key.get_private())
+    st.commit.wallet.setKeys(str(private_key.get_private()))
     return User(username, password, st)
 
 
@@ -30,16 +33,33 @@ class User:
 
     @staticmethod
     def get_videos_list(query):
-        pass
+        return get_chain_master().get_videos_list(query)
 
     @staticmethod
-    def get_video(name, path):
-        # TODO: get video hash from phantom user
-        multihash = None
+    def get_video_unauthorized(name, path):
+        video_metadata = get_chain_master().get_video_metadata(name)
+        multihash = video_metadata['multihash']
         get_ipfsapi().get_video(multihash, path)
+        return video_metadata
 
-    def add_video(self, name):
-        pass
+    def get_video(self, name, path):
+        video_metadata = User.get_video_unauthorized(name, path)
+        return Post({
+            'author': video_metadata['author'],
+            'permlink': video_metadata['name'],
+        }, self._steem)
+
+    def add_video(self, name, path, description=None):
+        description = description or 'No description'
+        result = self._ipfsapi.add_video(path)
+        get_chain_master().add_video(name, self._username, description, result['Hash'])
+        self._steem.commit.post(
+            title=name,
+            body=description,
+            author=self._username,
+            permlink=name,
+            default_parent_permlink='video'
+        )
 
     def vote_video(self, name, type):
         pass
