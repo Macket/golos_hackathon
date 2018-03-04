@@ -33,7 +33,7 @@ class VideoListItem extends React.Component {
         return (
             [
                 <video controls>
-                    <source src="/static/test_video.mp4" />
+                    <source src="/static/_videos/tmp-video.mp4" />
                 </video>,
                 <div id="rate-panel">
                     <div id="rate-panel-left-side">
