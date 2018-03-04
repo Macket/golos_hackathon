@@ -1,0 +1,59 @@
+@import "constants";
+
+#layout {
+  display: flex;
+  margin-top: 40px;
+}
+
+#layout-left-side {
+  flex-direction: column;
+  width: 70%;
+  padding-left: 5%;
+}
+
+#layout-right-side {
+  width: 30%;
+  padding-right: 5%;
+}
+
+.video-list, video {
+  box-shadow: $shadow;
+}
+
+#rate-panel {
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+}
+
+#rate-panel-left-side {
+  display: flex;
+  width: 40%;
+  height: 100px;
+}
+
+#rate-panel-right-side {
+  display: flex;
+  width: 50%;
+  height: 100px;
+}
+
+.rate-button {
+  margin: 0 100px 0 50px;
+}
+
+.rate-click-number {
+  margin: 0 50px 0 20px;
+}
+
+#like-percentage-line {
+  margin-top: 20px;
+  height: 10px;
+  background-color: $green;
+}
+
+#dislike-percentage-line {
+  margin-top: 20px;
+  height: 10px;
+  background-color: $red;
+}
