@@ -6,6 +6,7 @@ import callbacks as clb
 def config_dispather(dispatcher):
 	dispatcher.add_handler(CommandHandler("start", clb.start_callback))
 	dispatcher.add_handler(MessageHandler(Filters.video, clb.video_callback))
+	dispatcher.add_handler(MessageHandler(Filters.text, clb.message_callback))
 
 def init_bot():
 	updater = Updater(token=config.API_TOKEN)

@@ -8,3 +8,7 @@ def start_callback(bot, update):
 @run_async
 def video_callback(bot, update):
 	functions.video_callback_body(bot, update)
+
+@run_async
+def message_callback(bot, update):
+	functions.message_callback_body(bot, update)

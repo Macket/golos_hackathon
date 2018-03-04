@@ -13,17 +13,23 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
+from rest_framework import routers
 from core.views import IndexView
 from django.conf import settings
 from django.conf.urls.static import static
-from core.views import ExampleView
+from core.views import ExampleView, VideoViewSet
+
+# router = routers.DefaultRouter()
+# router.register(r'videos', VideoViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^index/', IndexView.as_view()),
-    url(r'api/v1/example', ExampleView.as_view()),
+    # url(r'api/v1/', include(router.urls)),
+    url(r'^api/v1/download_video/', ExampleView.as_view()),
+    url(r'^api/v1/videos/', VideoViewSet.as_view()),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
