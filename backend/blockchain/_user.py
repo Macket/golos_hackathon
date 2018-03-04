@@ -57,7 +57,7 @@ class User:
         get_chain_master().add_video(name, self._username, description, result['Hash'])
         self._steem.commit.post(
             title=name,
-            body=description,
+            body=description + '\n' + self.get_miniature_url(path),
             author=self._username,
             permlink=name,
             default_parent_permlink='video'
@@ -71,3 +71,6 @@ class User:
             return self._cur_post.upvote(self._username)
 
         return self._cur_post.downvote(self._username)
+
+    def get_miniature_url(self, path):
+        return 'https://kinolift.ru/media/users/3491/42068_l.jpg'
