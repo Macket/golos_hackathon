@@ -19,12 +19,13 @@ def upload_file(bot, update):
 				pure_file.download(custom_path=filepath)
 				try:
 					#hardcode
-					login = 'poster'
+					usename = 'poster'
 					password = 'qwerty12345'
-					user_ = login(login, password)
+					user_ = login(usename, password)
 					user_.add_video('VideoPotest', filepath)
 					return True
 				except Exception as e:
+					print('Upload fail!')
 					print(e)
 					return False
 				return True
@@ -33,7 +34,6 @@ def upload_file(bot, update):
 				return False
 	else:
 		return False
-	return True
 
 def video_callback_body(bot, update):
 	if upload_file(bot, update):
