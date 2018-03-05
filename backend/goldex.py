@@ -2,9 +2,16 @@ from nltk.stem import PorterStemmer
 
 
 def index(query, objs, key):
+    result = []
+
+    if not query:
+        for obj in objs:
+            result.append(obj)
+        return result
+
     pst = PorterStemmer()
     query_tokens = list(map(lambda x: pst.stem(x.lower()), query.split()))
-    result = []
+
     for obj in objs:
         stem_obj = pst.stem(key(obj).lower())
         if check_query_tokens_in_object(query_tokens, stem_obj):

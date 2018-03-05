@@ -31,9 +31,10 @@ class ExampleView(APIView):
 class VideoViewSet(APIView):
 
     def get(self, request, format=None):
-        videos_list = User.get_videos_list('')
-        print(videos_list)
-        return Response(videos_list)
+        query = self.request.query_params.get('query')
+        if query:
+            return Response(User.get_videos_list(query))
+        return Response(User.get_videos_list(''))
 
 
 class IndexView(TemplateView):

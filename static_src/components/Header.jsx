@@ -1,10 +1,8 @@
 import React from 'react';
 import AppBar from 'material-ui/AppBar';
-import FlatButton from 'material-ui/FlatButton';
-
-function handleClick() {
-    window.alert('onClick triggered on the title component');
-}
+import TextField from 'material-ui/TextField';
+import PropTypes from "prop-types";
+import apiUrls from "../constants/apiUrls";
 
 const styles = {
     appBar: {
@@ -20,18 +18,46 @@ const styles = {
     },
 };
 
-/**
- * This example uses an [IconButton](/#/components/icon-button) on the left, has a clickable `title`
- * through the `onClick` property, and a [FlatButton](/#/components/flat-button) on the right.
- */
-const Header = () => (
-    <AppBar
-        style={ styles.appBar }
-        title={ <span style={ styles.title }>Title</span> }
-        onTitleClick={ handleClick }
-        iconElementLeft={ <img src="/static/logo.jpg" width="40" height="40" /> }
-        iconElementRight={ <FlatButton style={ styles.icon } label="Save" /> }
-    />
-);
+class VideoList extends React.Component {
+    static propTypes = {
+        searchVideos: PropTypes.func.isRequired,
+    };
 
-export default Header;
+    state = {
+        query: '',
+    };
+
+    componentDidMount() {
+        document.getElementById('search').addEventListener('keydown', this.handleKeyDown);
+    }
+
+    handleKeyDown = (e) => {
+        if (e.keyCode === 13) { // Enter
+            this.props.searchVideos(this.state.query);
+        }
+    };
+
+    handleChange = (e) => {
+        this.setState({ query: e.target.value });
+    };
+
+    render() {
+        return (
+            <AppBar
+                style={ styles.appBar }
+                title={ <span style={ styles.title }>Зрение</span> }
+                iconElementLeft={ <img src="/static/logo.jpg" width="40" height="40" /> }
+                iconElementRight={ <TextField
+                    id="search"
+                    value={ this.state.query }
+                    style={ { 'margin-right': '150px' } }
+                    onChange={ this.handleChange }
+                    hintText="Поиск"
+                /> }
+            />
+        );
+    }
+}
+
+export default VideoList;
+
